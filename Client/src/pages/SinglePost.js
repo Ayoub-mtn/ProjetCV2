@@ -4,7 +4,7 @@ import { AuthContext } from "../context/auth";
 import DeleteButton from "../components/DeleteButton";
 import { ADD_EDUCATION, ADD_Work, FETCH_POST_QUERY } from "../util/graphql";
 import { useMutation, useQuery } from "@apollo/client";
-import { Button, Card } from "semantic-ui-react";
+import { Button, Card, Image } from "semantic-ui-react";
 import AddExtra from "../components/AddWork";
 import AddEducation from "../components/AddEducation";
 
@@ -45,7 +45,11 @@ function SinglePost(props) {
         <div class="left">
           <div class="name-hero">
             <div class="me-img"></div>
-
+            <Image
+          floated="right"
+          size="small"
+          src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+        />
             <div class="name-text">
               <h1>
                 {firstname} <em>{lastname}</em>
