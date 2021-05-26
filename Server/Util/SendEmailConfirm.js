@@ -19,7 +19,7 @@ const nodemailer = require('nodemailer');
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: email, // list of receivers
+    to: email, // list of receiversd
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: `<a href="${url}">${url}</a>`, // html body
