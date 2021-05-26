@@ -1,0 +1,26 @@
+{
+  "name": "Test4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index",
+    "start": "nodemon index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.24.1",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^15.5.0",
+    "ioredis": "^4.27.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.10",
+    "nodemailer": "^6.6.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
