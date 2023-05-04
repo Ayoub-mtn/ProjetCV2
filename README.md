@@ -1,4 +1,4 @@
-Sub CopierLignes()
+Function jalons()
     Dim Feuil1 As Worksheet
     Dim Feuil2 As Worksheet
     Dim Donnees() As Variant
@@ -28,4 +28,4 @@ Sub CopierLignes()
     
     ' Ferme le fichier Excel contenant la feuille "Feuil1"
     Fichier1.Close SaveChanges:=False
-End Sub
+End Function
