@@ -1,31 +1,22 @@
-Function jalons()
-    Dim Feuil1 As Worksheet
-    Dim Feuil2 As Worksheet
-    Dim Donnees() As Variant
-    Dim Trouve As Range
-    Dim i As Long
-    Dim Fichier1 As Workbook
+Sub copier_colonne()
+    'Déclaration des variables
+    Dim feuille_source As Worksheet
+    Dim feuille_dest As Worksheet
+    Dim derniere_ligne As Long
     
-    ' Ouvre le fichier Excel contenant la feuille "Feuil1"
-    Set Fichier1 = Workbooks.Open("C:\Chemin\vers\Fichier1.xlsx")
+    'Affectation de la feuille source
+    Set feuille_source = ThisWorkbook.Sheets("LISTE PROJETS RAA")
     
-    ' Déclaration des variables pour les feuilles de calcul
-    Set Feuil1 = Fichier1.Worksheets("Feuil1")
-    Set Feuil2 = Worksheets("LISTE JALONS")
+    'Affectation de la feuille de destination
+    Set feuille_dest = ThisWorkbook.Sheets("Feuille2")
     
-    ' Récupération des données de la plage D2:D50 de la feuille "LISTE PROJETS RAA"
-    Donnees = Feuil2.Range("D2:D50").Value
+    'Détermination de la dernière ligne de la colonne à copier
+    derniere_ligne = feuille_source.Cells(Rows.Count, "A").End(xlUp).Row
     
-    ' Parcours des données récupérées
-    For i = 1 To UBound(Donnees, 1)
-        ' Recherche de la donnée dans la colonne A de la feuille "Feuil1"
-        Set Trouve = Feuil1.Range("A:A").Find(What:=Donnees(i, 1), LookIn:=xlValues, LookAt:=xlWhole)
-        If Not Trouve Is Nothing Then
-            ' Copie de la ligne correspondante dans la feuille "LISTE JALONS"
-            Feuil1.Rows(Trouve.Row).Copy Feuil2.Cells(i + 1, 1)
-        End If
-    Next i
+    'Copie de la colonne A de la feuille source à la colonne A de la feuille de destination
+    feuille_source.Range("A1:A" & derniere_ligne).Copy Destination:=feuille_dest.Range("A1")
     
-    ' Ferme le fichier Excel contenant la feuille "Feuil1"
-    Fichier1.Close SaveChanges:=False
-End Function
+    'Libération de la mémoire
+    Set feuille_source = Nothing
+    Set feuille_dest = Nothing
+End Sub
