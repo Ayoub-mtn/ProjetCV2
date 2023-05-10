@@ -10,6 +10,8 @@ Sub rechercher_valeur()
     chemin_fichier = "C:\Chemin\vers\fichier.xlsx" 'Modifier le chemin d'accès en fonction de votre fichier
     
     'Affectation de la valeur sélectionnée
+    valeur_recherchee = Sheets("feuil1").Range("A1").Value 'Modifier la plage de cellules en fonction de votre besoin
+    'Affectation de la valeur sélectionnée
     valeur_recherchee = Selection.Value
     
     'Ouverture du fichier contenant la colonne de recherche
