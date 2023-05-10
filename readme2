@@ -1,0 +1,49 @@
+Sub chercher_valeur()
+    'Déclaration des variables
+    Dim chemin_fichier As String
+    Dim valeur_recherchee As String
+    Dim derniere_ligne As Long
+    Dim i As Long
+    Dim ligne_trouvee As Long
+    Dim tableau_lignes_trouvees() As Long
+    Dim compteur_lignes_trouvees As Long
+    Dim feuille_dest As Worksheet
+    
+    'Définition du chemin d'accès du fichier contenant la colonne de recherche
+    chemin_fichier = "C:\Chemin\vers\export.xlsx" 'Modifier le chemin d'accès en fonction de votre fichier
+    
+    'Affectation de la valeur sélectionnée
+    valeur_recherchee = Sheets("feuil1").Range("A1").Value 'Modifier la plage de cellules en fonction de votre besoin
+    
+    'Ouverture du fichier contenant la colonne de recherche
+    Dim fichier_source As Workbook
+    Set fichier_source = Workbooks.Open(chemin_fichier)
+    
+    'Détermination de la dernière ligne de la colonne de recherche
+    derniere_ligne = fichier_source.Sheets("Feuil1").Cells(Rows.Count, "A").End(xlUp).Row
+    
+    'Recherche de la valeur dans la colonne A du fichier source
+    compteur_lignes_trouvees = 0 'Initialisation du compteur de lignes trouvées
+    For i = 1 To derniere_ligne
+        If fichier_source.Sheets("Feuil1").Cells(i, 1).Value = valeur_recherchee Then
+            compteur_lignes_trouvees = compteur_lignes_trouvees + 1 'Incrémentation du compteur de lignes trouvées
+            ReDim Preserve tableau_lignes_trouvees(1 To compteur_lignes_trouvees) 'Redimensionnement du tableau de lignes trouvées
+            tableau_lignes_trouvees(compteur_lignes_trouvees) = i 'Mémorisation de la ligne trouvée dans le tableau
+        End If
+    Next i
+    
+    'Référence à la feuille de destination
+    Set feuille_dest = Workbooks("liste jalons data.xlsx").Sheets("Feuil1") 'Modifier le nom du fichier et de la feuille en fonction de votre besoin
+    
+    'Copie des lignes trouvées dans la feuille de destination
+    For i = 1 To compteur_lignes_trouvees
+        fichier_source.Sheets("Feuil1").Rows(tableau_lignes_trouvees(i)).Copy
+        feuille_dest.Cells(feuille_dest.Rows.Count, "A").End(xlUp).Offset(1, 0).PasteSpecial xlPasteAll
+    Next i
+    
+    'Fermeture du fichier source
+    fichier_source.Close
+    
+    'Libération de la mémoire
+    Set fichier_source = Nothing
+End Sub
