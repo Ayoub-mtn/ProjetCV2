@@ -1,0 +1,75 @@
+Function jalons()
+Dim feuille_source As Worksheet
+Dim feuille_dest As Worksheet
+Dim derniere_ligne As Long
+Dim Export_jalons_2023_04_30 As Workbook
+Dim chemin_fichier As String
+Dim valeur_recherchee As String
+Dim derniere_ligne2 As Long
+Dim i As Long
+Dim ligne_trouvee As Long
+Dim tableau_lignes_trouvees() As Long
+Dim compteur_lignes_trouvees As Long
+Dim feuille_dest2 As Worksheet
+
+ 'Définition du chemin d'accès du fichier contenant la colonne de recherche
+chemin_fichier = "C:\Users\f52581\BNP Paribas\DUMONT Murielle - ERE\ERE - Doc à Suppr\Export_jalons_2023_04_30.xlsx" 'Modifier le chemin d'accès en fonction de votre fichier
+    
+    
+ 'Affectation de la feuille source
+Set feuille_source = ThisWorkbook.Sheets("LISTE PROJETS RAA")
+
+'Affectation de la feuille de destination
+Set feuille_dest = ThisWorkbook.Sheets("Feuil1")
+
+'Détermination de la dernière ligne de la colonne à copier
+derniere_ligne = feuille_source.Cells(Rows.Count, "A").End(xlUp).Row
+
+'Copie de la colonne A de la feuille source à la colonne A de la feuille de destination
+feuille_source.Range("D2:D" & derniere_ligne).Copy Destination:=feuille_dest.Range("A1")
+
+
+'Affectation de la valeur sélectionnée
+valeur_recherchee = ThisWorkbook.Sheets("Feuil1").Range("A1").Value
+
+'Ouverture du fichier contenant la colonne de recherche
+
+Set Export_jalons_2023_04_30 = Workbooks.Open(chemin_fichier)
+
+derniere_ligne2 = Export_jalons_2023_04_30.Sheets("Feuil1").Cells(Rows.Count, "A").End(xlUp).Row
+
+compteur_lignes_trouvees = 0
+For i = 1 To derniere_ligne2
+    If Export_jalons_2023_04_30.Sheets("Feuil1").Cells(i, 1).Value = valeur_recherchee Then
+        compteur_lignes_trouvees = compteur_lignes_trouvees + 1
+        ReDim Preserve tableau_lignes_trouvees(1 To compteur_lignes_trouvees)
+        tableau_lignes_trouvees(compteur_lignes_trouvees) = i
+        Exit For
+    End If
+Next i
+
+
+Set feuille_dest2 = ThisWorkbook.Sheets("Feuil2")
+    
+For i = 1 To compteur_lignes_trouvees
+    Debug.Print "Ligne trouvée : " & tableau_lignes_trouvees(i)
+    Export_jalons_2023_04_30.Sheets("Feuil1").Rows(tableau_lignes_trouvees(i)).Copy
+    feuille_dest2.Cells(feuille_dest2.Rows.Count, "A").End(xlUp).Offset(1, 0).PasteSpecial xlPasteAll
+Next i
+
+'Libération de la mémoire
+Set Export_jalons_2023_04_30 = Nothing
+Set feuille_source = Nothing
+Set feuille_dest = Nothing
+Set feuille_dest2 = Nothing
+
+
+End Function
+
+
+Sub AppelerJalons()
+ 
+    Call jalons
+
+End Sub
+
