@@ -24,14 +24,14 @@ Sub rechercher_valeur()
     'Recherche de la valeur dans la colonne A du fichier source
     For i = 1 To derniere_ligne
         If fichier_source.Sheets("Feuil1").Cells(i, 1).Value = valeur_recherchee Then
-            trouve = True 'La valeur a été trouvée
+            ligne_trouvee = i 'La valeur a été trouvée, on mémorise la ligne
             Exit For
         End If
     Next i
     
     'Affichage du message si la valeur est trouvée ou non
-    If trouve = True Then
-        MsgBox "La valeur " & valeur_recherchee & " a été trouvée dans le fichier source."
+    If ligne_trouvee > 0 Then
+        MsgBox "La valeur " & valeur_recherchee & " a été trouvée à la ligne " & ligne_trouvee & " du fichier source."
     Else
         MsgBox "La valeur " & valeur_recherchee & " n'a pas été trouvée dans le fichier source."
     End If
